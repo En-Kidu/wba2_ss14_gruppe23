@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <title>Test</title>
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript">
+
+        
+            $(function(){
+                $('#formular').submit(function(event){
+                event.preventDefault();
+                var daten={"name" :  $('input[name="planetenname"]').val(),"entfernung" :  $('input[name="planetenentfernung"]').val(),"durchmesser" :  $('input[name="planetendurchmesser"]').val()};
+                $.ajax({
+                        type: 'POST',
+                        url: '/planeten',
+                        data: JSON.stringify(daten),
+                        contentType: 'application/json'
+                        }).done(function(){
+                            $('input[name="planetenname"]').val("");
+                            $('input[name="planetenentfernung"]').val("");
+                            $('input[name="planetendurchmesser"]').val("");
+                            alert(daten.name+' wurde hinzugefuegt.');
+                        }).fail(function(e){
+                            alert(daten.name+' konnte nicht hinzugefuegt werden.('+JSON.stringify(event)+')');
+                    });
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <h1>Formular</h1>
+        <form id='formular'>
+            <label for="planet">
+                <p>Planetenname:<br><input name='planetenname' id="name"></p>
+                <p>Entfernung:<br><input name='planetenentfernung' id="entfernung"</p>
+                <p>Groesse:<br><input name='planetendurchmesser' id="groesse"</p>
+                <p><input type='submit'  value=' Absenden '></p>
+            </label>
+        </form>
+        <a href="/planeten"> /planeten </a>
+    </body>
+</html>
