@@ -20,21 +20,7 @@ app.configure(function(){
     
 app.get('/planeten',function(req,res){
 	console.log("neuer HTTP-Request");
-	console.log("Methode: "+req.method);
-	var body = '';
-
-	req.on('data',function(data){
-		body = body+data.toString();
-	});
-
-
-	req.on('end',function(){
-		var daten = req.body
-		var pfad = url.parse(req.url).pathname;
-		console.log(body);        
-        var	pfad	=	url.parse(req.url).pathname;	
-        console.log('Pfad:	'+pfad);	
-        console.log(daten);	
+	console.log("Methode: "+req.method + " auf " + req.url);
 
         res.write('<h1> Sonnensystemtabelle </h1><table border="1"><tr> <th> Planeten</th> <th> Entfernung in AE</th> <th> Durchmesser in km</th> </tr>');
         for(var i=0; i<planeten.length; i++){      // Array wird ausgegeben und tabelle wird erzeugt bis keine inhalte mehr vorhanden sind
@@ -43,29 +29,18 @@ app.get('/planeten',function(req,res){
                         "<td>"+planeten[i].entfernung+"</td>"+
                         "<td>"+planeten[i].durchmesser+"</td>"+
                       "</tr>");
-            }
-            res.write("</table>");
-            res.write('<a href="/"> index.html </a>');
-            res.end();
-	});
+        }
+        res.write("</table>");
+        res.write('<a href="/"> index.html </a>');
+        res.end();
+
 });
 
 app.post('/planeten',function(req,res){
-	console.log("neuer HTTP-Request");
+    console.log("neuer HTTP-Request");
 	console.log("Methode: "+req.method);
-	var body = '';
-    
-    req.on('data',function(data){
-        body = body+data.toString();
-    });
-    
-    var daten = req.body
-    var pfad = url.parse(req.url).pathname;
-    console.log(body);
-    var	pfad	=	url.parse(req.url).pathname;	
-    console.log('Pfad:	'+pfad);	
-    console.log(daten);	
-    planeten.push({"name" : daten.name,"entfernung" : daten.entfernung,"durchmesser" : daten.durchmesser});  
+    console.log(req.body);	
+    planeten.push({"name" : req.body.name,"entfernung" : req.body.entfernung,"durchmesser" : req.body.durchmesser});  
     res.end();
 });
 
