@@ -1,0 +1,95 @@
+﻿<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset='utf-8'>
+		<title>Planeten</title>
+		<!--jQuery wird eingebunden-->
+        <script src='http://code.jquery.com/jquery-1.11.0.min.js'></script>
+		<!--Faye wird eingebunden-->
+		<script type='text/javascript' src='/faye/client.js'></script>
+        <script>
+            //Die Funktionen erst ausfuehren, wenn das komplette Dokument geladen ist.
+            $(document).ready(function(){
+				
+				//PubSub-Client erzeugen
+				var client = new Faye.Client('/faye');
+				
+				//Topic 'planeten' abonnieren
+				client.subscribe('/planeten', function(message) {
+					addRow(message);
+				});
+				
+				//Button 'Add' wird gedrueckt
+				$('#planetenform').submit(function(event) {
+					
+					//Datenobjekt der eingegebenen Informationen
+					var data = {
+						name: $('#name').val(),
+						durchmesser: $('#durchmesser').val(),
+						entfernung: $('#entfernung').val()
+					};
+					
+					//Die Daten per POST an Webserver uebertragen.
+					$.ajax({
+						type: 'POST',
+						url: '/planeten',
+						data: JSON.stringify(data),
+						contentType: 'application/json'
+						//Wenn erfolgreich, dann PopUp. Form wird geloescht.
+						}).done(function() {
+							//alert(data.name + ' wurde hinzugefuegt.');
+							$('#planetenform')[0].reset();
+						//Wenn Fehler, dann PopUp mit Fehlermeldung.
+						}).fail(function(e) {
+							alert(data.name + ' wurde nicht hinzugefuegt. (' + JSON.stringify(e) + ')');
+					});
+					
+					//Default POST unterdruecken.
+					event.preventDefault();
+				});
+				
+				$.ajax({
+					type: 'GET',
+					url: '/planeten',
+					contentType: 'application/json'
+					//Wenn erfolgreich, dann 'addRow' aufrufen.
+					}).done(function(data) {
+						alert(data);
+						data.forEach(function(planet) {
+							addRow(planet);
+						});
+						//alert('Daten erfolgreich geladen.');
+					//Wenn Fehler, dann PopUp mit Fehlermeldung.
+					}).fail(function(e) {
+						alert('Fehler beim Holen der Daten. (' + JSON.stringify(e) + ')');
+				});
+				
+				//Zeile an Tabelle anhaengen
+				function addRow(planet) {
+					$('#planetenTable').append('<tr><td>' + planet.name + '</td><td>' + planet.durchmesser + '</td><td>' + planet.entfernung + '</td></tr>');
+				}
+            });
+			
+        </script>
+    </head>
+    <body>
+		<!--Tabelle wird erstellt-->
+		<table border='1' id='planetenTable'>
+			<tr>
+				<th>Name</th>
+				<th>Durchmesser</th>
+				<th>Entfernung</th>
+			</tr>
+		</table>
+		<br>
+        <!--Formular wird erstellt-->
+        <form id='planetenform' name='planetenform' action='/planeten'>
+            <table>
+				<tr><td>Name:</td><td><input type='text' id='name' name='name'/></td></tr>
+				<tr><td>Durchmesser:</td><td><input type='text' id='durchmesser' name='durchmesser'/></td></tr>
+				<tr><td>Entfernung:</td><td><input type='text' id='entfernung' name='entfernung'/></td></tr>
+				<tr><td><input type='submit' name='submit' value='Add'/></td><td></td></tr>
+			</table>
+        </form>
+    </body>
+</html>
