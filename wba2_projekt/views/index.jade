@@ -1,0 +1,89 @@
+extends layout
+
+block content
+  h1= title
+  p wba2 App
+
+  #wrapper
+
+    // Info BEGIN
+    #lInfo
+      h2 Leistung Info
+      p
+        strong Bezeichnung:
+        |  <span id='LInfoBezeichnung'></span>
+        br
+        strong Preis:
+        |  <span id='LInfoPreis'></span>
+        br
+        strong Von:
+        |  <span id='LInfoVon'></span>
+        br
+        strong Fuer:
+        |  <span id='LInfoFuer'></span>
+        br
+        strong Datum:
+        |  <span id='LInfoDate'></span>
+        br
+    // Info END
+
+    // Tabelle Leistungen BEGIN
+    #tableWrapper
+      h2 Leistungen
+      #lList
+        table
+          thead
+            th Bezeichnung
+            th Preis
+            th Von
+            th Fuer
+            th Delete/Update?
+          tbody
+        br
+      #addLPanel
+        h2 Neue Leistung
+        #addL
+          fieldset
+            input#inputBezeichnung(type='text', name='bezeichnung', placeholder='Bezeichnung')
+            input#inputPreis(type='text', name='preis', placeholder='Preis')
+            input#inputVon(type='text', name='von', placeholder='Von')
+            input#inputFuer(type='text', name='fuer', placeholder='Fuer')
+            br
+            button#btnAddL Add Leistung
+            br
+            br
+      // Tabelle Leistungen END
+    
+      #updateLPanel
+        h2 Update Leistung
+        #updateL
+          fieldset
+            input#updateBezeichnung(type='text', placeholder='bezeichnung')
+            input#updatePreis(type='text', placeholder='preis')
+            input#updateVon(type='text', placeholder='von')
+            input#updateFuer(type='text', placeholder='fuer')
+            br
+            button#btnUpdateL Update Leistung
+            button#btnCancelUpdateL Cancel
+            br
+      // Tabelle Leistungen END
+
+      #sortLPanel
+        h2 Leistungen ordnen
+        #sortL
+          fieldset
+            input#getUser(type='text', placeholder='Username')
+            button#btnSort Anzeigen
+            br
+            br
+      // Tabelle Leistungen END
+
+      h2 blank
+      #sortedList
+        table
+          thead
+            th Bezeichnung
+            th Preis
+            th Von
+            th Fuer
+          tbody
