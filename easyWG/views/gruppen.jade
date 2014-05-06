@@ -1,0 +1,34 @@
+extends layout
+
+block content
+
+  body
+    #header
+      #hUpper
+        span  easyWG
+        form#loginField(name="login",method="get",action="/")
+          fieldset
+            legend(name= userName)=  'User: ' + userName
+            button#loginButton(type='submit')  Logout
+      .clear
+      #nav
+        a(href='/user/'+userName+'/gruppen')
+          div  Gruppen
+        a(href='/user/'+userName+'/profil')
+          div  pers. Einkaufsliste
+
+    #main
+      form#newGroupField
+        fieldset
+          legend  Gruppe erstellen:
+          input#inputGruppenName(type='text', placeholder='Gruppenname')
+          button#newGroupButton  erstellen
+
+      table#gruppenliste
+        caption  Gruppen
+        thead
+          th  Name
+          th
+        tbody
+
+    <script src='/javascripts/gruppen.js'></script>

@@ -1,0 +1,31 @@
+extends layout
+
+block content
+
+  body
+    #header
+      #hUpper
+        span  easyWG
+        form#loginField(name="login",method="get",action="/")
+          fieldset
+            legend(name= userName)=  'User: ' + userName
+            button#loginButton(type='submit')  Logout
+      .clear
+      #nav
+        a(href='/user/'+userName+'/gruppen')
+          div  Gruppen
+        a(href='/user/'+userName+'/profil')
+          div  pers. Einkaufsliste
+
+    #main
+      table#einkaufsliste
+        caption  Einkaufsliste
+        thead
+          th
+          th  Produkt
+          th  fuer
+          th  maxPreis
+          th  Einkaufspreis
+        tbody
+
+    <script src='/javascripts/profil.js'></script>

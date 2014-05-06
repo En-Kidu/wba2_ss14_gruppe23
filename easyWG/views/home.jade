@@ -1,0 +1,30 @@
+extends layout
+
+block content
+
+  body
+    #header
+      #hUpper
+        span  easyWG
+        form#loginField(name="login",method="get",action="/")
+          fieldset
+            legend(name= userName)=  'User: ' + userName
+            button#loginButton(type='submit')  Logout
+      .clear
+      #nav
+        a(href='/user/'+userName+'/gruppen')
+          div  Gruppen
+        a(href='/user/'+userName+'/profil')
+          div  pers. Einkaufsliste
+
+    #main
+      
+      h1=  'Hallo ' + userName + ','
+      p
+        | von hier aus gelangst du über das Menü zu der Gruppenübersicht und deiner persönlichen Einkaufsliste.
+      p
+        | In der Gruppenübersicht kannst du Gruppen erstellen sowie dich anderen Gruppen anschließen
+      p
+        | Auf deiner persönlichen Einkaufsliste findest du eine Zusammenfassung dein geplanten Einkäufe aus allen Gruppen.
+      p
+        | Viel Spaß!

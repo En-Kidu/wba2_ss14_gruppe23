@@ -1,0 +1,21 @@
+extends layout
+
+block content
+
+  body
+    #header
+      #hUpper
+        span  easyWG
+        form#loginField(name="login",method="get",action="/login")
+          fieldset
+            legend  Login:
+            input#loginNameInput(type='text', placeholder='UserName', name='username')
+            input#loginPasswordInput(type='text', placeholder='Password', name='password')
+            button#loginButton(type='submit')  Login
+      .clear
+      #nav
+
+    #main
+
+
+    #footer

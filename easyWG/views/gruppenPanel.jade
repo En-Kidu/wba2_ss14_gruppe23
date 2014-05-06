@@ -1,0 +1,62 @@
+extends layout
+
+block content
+
+  body
+    #header
+      #hUpper
+        span  easyWG
+        form#loginField(name="login",method="get",action="/")
+          fieldset
+            legend(name= userName)=  'User: ' + userName
+            button#loginButton(type='submit')  Logout
+      .clear
+      #nav
+        a(href='/user/'+userName+'/gruppen')
+          div  Gruppen
+        a(href='/user/'+userName+'/profil')
+          div  pers. Einkaufsliste
+
+    #main(rel= gruppenId)
+
+      h2= gruppenName
+
+      form#newBedarfField
+        fieldset
+          legend  neue Anfrage
+          input(id='inputBedarfName' type='text', placeholder='Produkt')
+          input(id='inputBedarfMaxPreis' type='text', placeholder='Preisobergrenze')
+          button#newBedarfButton  erstellen
+
+      table#bedarfsliste
+        caption  Anfragen
+        thead
+          th
+          th  Produkt
+          th  maxPreis
+          th  fuer
+          th
+        tbody
+
+      table#einkaufsliste
+        caption  Einkaufsliste
+        thead
+          th
+          th  Produkt
+          th  maxPreis
+          th  Einkaufspreis
+          th
+        tbody
+
+      table#einkaeufe
+        caption  getaetigte Einkaeufe
+        thead
+          th
+          th  Produkt
+          th  fuer
+          th  von
+          th  Preis
+          th
+        tbody
+
+    <script src='/javascripts/gruppenPanel.js'></script>
